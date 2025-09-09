@@ -1,1 +1,0 @@
-//Representa as entidades de URL no sistema

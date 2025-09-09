@@ -37,3 +37,6 @@ C:\Encurta_URLs\Backend\obj\Debug\net9.0\refint\Backend.dll
 C:\Encurta_URLs\Backend\obj\Debug\net9.0\Backend.pdb
 C:\Encurta_URLs\Backend\obj\Debug\net9.0\Backend.genruntimeconfig.cache
 C:\Encurta_URLs\Backend\obj\Debug\net9.0\ref\Backend.dll
+C:\Encurta_URLs\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Encurta_URLs\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Encurta_URLs\Backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

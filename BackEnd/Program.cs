@@ -1,12 +1,35 @@
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.Configure<MongoDbConfig>(
-    builder.Configuration.GetSection("MongoDBSettings")
-);
 
+// Configuração do MongoDB
+builder.Services.Configure<MongoDbConfig>(
+    builder.Configuration.GetSection("MongoDb")
+);
+builder.Services.AddSingleton<URLRepository>();
+
+// Controllers e Swagger
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "URL Shortener API", Version = "v1" });
+});
+
 var app = builder.Build();
 
+// Swagger sempre disponível
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "URL Shortener API v1");
+    c.RoutePrefix = string.Empty; // abre direto em http://localhost:5125
+});
+
+// app.UseHttpsRedirection();
+
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

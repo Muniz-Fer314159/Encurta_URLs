@@ -1,6 +1,16 @@
-@Backend_HostAddress = http://localhost:5125
-
-GET {{Backend_HostAddress}}/weatherforecast/
+GET http://localhost:5125/urls/test-get/ex123 HTTP/1.1
+Content-Type: application/json
 Accept: application/json
+User-Agent: Thunder Client (https://www.thunderclient.com)
+x-api-key: 12345
 
-###
+### Teste de inserção
+POST http://localhost:5125/urls/test-insert
+Content-Type: application/json
+Accept: application/json
+User-Agent: Thunder Client (https://www.thunderclient.com)
+
+{
+    "originalUrl": "https://example.com",
+    "shortenedUrl": "ex123"
+}

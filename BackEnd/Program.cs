@@ -25,11 +25,13 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "URL Shortener API v1");
-    c.RoutePrefix = string.Empty; // abre direto em http://localhost:5125
+    c.RoutePrefix = string.Empty;
+
+    c.InjectStylesheet("/swagger-custom.css");
+    c.InjectJavascript("/swagger-custom.js");
 });
 
-// app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthorization();
 app.MapControllers();
 

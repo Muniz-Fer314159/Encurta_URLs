@@ -1,0 +1,72 @@
+#############################################
+# .NET BUILD FILES
+#############################################
+
+# Pastas de build
+bin/
+obj/
+artifacts/
+
+# Arquivos gerados
+*.dll
+*.exe
+*.pdb
+
+#############################################
+# VISUAL STUDIO / VS CODE
+#############################################
+
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+#############################################
+# LOGS E TEMP
+#############################################
+
+*.log
+*.tmp
+*.temp
+*.cache
+*.swp
+
+#############################################
+# CONFIGURAÇÕES SENSÍVEIS
+#############################################
+
+# Variáveis de ambiente
+.env
+
+# Arquivos que podem conter secrets
+secrets.json
+
+#############################################
+# DOCKER
+#############################################
+
+docker-compose.override.yml
+docker-compose.*.yml
+Dockerfile.*.temp
+*.pid
+
+#############################################
+# SISTEMA OPERACIONAL
+#############################################
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# MacOS
+.DS_Store
+
+#############################################
+# MONGODB
+#############################################
+
+# Se estiver rodando Mongo local (sem docker)
+data/db/
+dump/

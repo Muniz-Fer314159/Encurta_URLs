@@ -11,6 +11,7 @@ builder.Services.AddSingleton<URLRepository>();
 
 // Controllers e Swagger
 builder.Services.AddControllers();
+builder.Services.AddScoped<UrlsServices>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

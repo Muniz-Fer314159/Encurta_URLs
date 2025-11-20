@@ -6,33 +6,88 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class UrlsController : ControllerBase
 {
-    private readonly URLRepository _repository;
+    private readonly UrlsServices _services;
 
-    public UrlsController(URLRepository repository)
+    public UrlsController(UrlsServices services)
     {
-        _repository = repository;
+        _services = services;
     }
 
-    // Endpoint de teste de conexão
-    [HttpPost("test-insert")]
-    public IActionResult TestInsert()
+    //Criar URL curta
+    [HttpPost ("encurtar")]
+    public IActionResult CreateShortUrl([FromBody] string originalURL)
     {
-        var url = new URLModel
+        try
         {
-            OriginalURL = "https://example.com",
-            ShortenedURL = "ex123"
-        };
-
-        _repository.Insert(url);
-        return Ok("URL inserida no Mongo com sucesso!");
+            var result = _services.CreateShortUrl(originalURL);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
-
-    // Endpoint de teste de leitura
-    [HttpGet("test-get/{shortUrl}")]
-    public IActionResult TestGet(string shortUrl)
+    //Listar por URL curta
+    [HttpGet("{shortenedURL}")]
+    public IActionResult GetByShortenedUrl (string shortenedURL)
     {
-        var url = _repository.GetByShortenedUrl(shortUrl);
-        if (url == null) return NotFound("URL não encontrada no Mongo");
-        return Ok(url);
+            var url = _services.GetByShortenedUrl(shortenedURL);
+
+            if (url == null)
+            {
+                return NotFound("URL não encontrada.");
+            }
+            return Ok(url);
     }
+    //Listar todas as URLs
+    [HttpGet]
+    public IActionResult GetAllUrls()
+    {
+        var urls = _services.GetAllUrls();
+        return Ok(urls);
+    }
+    //Atualizar URL
+    [HttpPut ("{shortenedURL}")]
+        public IActionResult Update (string shortenedURL, [FromBody] string newOriginalUrl)
+    {
+        var existingUrl = _services.GetByShortenedUrl(shortenedURL);
+
+        if (existingUrl == null)
+        {
+            return NotFound("URL não encontrada.");
+
+        }
+        existingUrl.OriginalURL = newOriginalUrl;
+        _services.UpdateUrl(existingUrl);
+
+        return Ok(existingUrl);
+    }
+    //Deletar URL
+    [HttpDelete ("{shortenedURL}")]
+    public IActionResult Delete (string shortenedURL)
+    {
+        var delete = _services.DeleteUrl(shortenedURL);
+        if (!delete)
+        {
+            return NotFound("URL não encontrada.");
+        }
+
+        return Ok("URL deletada com sucesso.");
+    }
+    //Redirecionamento de Urls
+    [HttpGet("r/{shortenedURL}")]
+    public IActionResult RedirectToOriginalUrl(string shortenedURL)
+    {
+        var url = _services.GetByShortenedUrl(shortenedURL);
+
+        if (url == null)
+        {
+            return NotFound("URL não encontrada.");
+        }
+        return Redirect(url.OriginalURL);
+    }
+    
+
 }
+
+
